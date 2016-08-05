@@ -21,8 +21,7 @@ SET_PROPERTY(TARGET imp_cpputest PROPERTY
 
 # led_driver
 ADD_LIBRARY(LedDriverTest ./led_driver/led_driver_test.cpp)
-
-#CUDA_ADD_EXECUTABLE(CUDATest ./Framework/CudaTest.cu)
+TARGET_LINK_LIBRARIES(LedDriverTest LedDriver)
 
 ADD_EXECUTABLE(RunAllTests RunAllTests.cpp)
 TARGET_LINK_LIBRARIES(RunAllTests imp_cpputest

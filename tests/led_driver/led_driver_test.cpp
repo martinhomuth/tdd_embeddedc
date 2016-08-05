@@ -8,7 +8,15 @@ TEST_GROUP(led_driver)
 {
 };
 
+/**
+ * The driver is responsible for resetting every led
+ * after the initialization
+ */
 TEST(led_driver, LedsOffAfterCreate)
 {
-	LONGS_EQUAL(0, 1);
+	uint16_t virtualLeds = 0xffff;
+	LedDriver_Create(&virtualLeds);
+	LONGS_EQUAL(0, virtualLeds);
+}
+
 }
