@@ -17,7 +17,7 @@ LINK_DIRECTORIES($ENV{CPPUTEST_HOME}/lib -lCppUTest -lCppUTestExt)
 # add cpputest library
 ADD_LIBRARY(imp_cpputest STATIC IMPORTED)
 SET_PROPERTY(TARGET imp_cpputest PROPERTY
-             IMPORTED_LOCATION $ENV{CPPUTEST_HOME}/build/src/CppUTest/libCppUTest.a)
+             IMPORTED_LOCATION $ENV{CPPUTEST_HOME}/lib/libCppUTest.a)
 
 # led_driver
 ADD_LIBRARY(LedDriverTest ./led_driver/led_driver_test.cpp)
