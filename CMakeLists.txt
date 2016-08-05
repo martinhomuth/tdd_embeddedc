@@ -1,0 +1,31 @@
+PROJECT(TDDEmbeddedC)
+
+CMAKE_MINIMUM_REQUIRED(VERSION 3.3.1)
+
+SET(COMPONENT_NAME TDDEmbeddedC)
+
+# Check for CppUTest and bail out if they don't have it
+if(DEFINED ENV{CPPUTEST_HOME})
+  message("Using CppUTest found in $ENV{CPPUTEST_HOME}")
+else()
+  message("CPPUTEST_HOME is not set; You must tell CMake where to find CppUTest")
+  return()
+endif()
+
+ENABLE_LANGUAGE(C)
+ENABLE_LANGUAGE(CXX)
+
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+# some flags and such
+SET(CPP_PLATFORM Gcc)
+SET(PROJECT_HOME_DIR .)
+SET(ORIG_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+SET(CMAKE_CXX_FLAGS "-pedantic -Wall -Werror")
+
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(tests)
