@@ -19,4 +19,10 @@ TEST(led_driver, LedsOffAfterCreate)
 	LONGS_EQUAL(0, virtualLeds);
 }
 
+TEST(led_driver, TurnOnLedOne)
+{
+	uint16_t virtualLeds;
+	LedDriver_Create(&virtualLeds);
+	LedDriver_TurnOn(1);
+	LONGS_EQUAL(1, virtualLeds);
 }
