@@ -1,0 +1,11 @@
+-*- mode: org -*-
+
+#+TITLE: CircularBuffer Test List
+
+1. Creation of buffer has zero elements (popping fails)
+2. Popping from an empty buffer results in error (-1)
+3. Adding one element results in one element in the buffer (only one
+   can be popped)
+4. Adding two elements results in two poppable elements
+5. Adding SIZE elements succeeds
+6. Adding more than SIZE elements results in error
