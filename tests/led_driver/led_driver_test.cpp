@@ -40,3 +40,46 @@ TEST(led_driver, TurnOffLedOne)
 	LedDriver_TurnOff(1);
 	LONGS_EQUAL(0, virtualLeds);
 }
+
+TEST(led_driver, TurnOnMultipleLeds)
+{
+	LedDriver_TurnOn(9);
+	LedDriver_TurnOn(8);
+	LONGS_EQUAL(0x180, virtualLeds);
+}
+
+TEST(led_driver, TurnOffAnyLed)
+{
+	LedDriver_TurnAllOn();
+	LedDriver_TurnOff(8);
+	LONGS_EQUAL(0xff7f, virtualLeds);
+}
+
+TEST(led_driver, AllOn)
+{
+	LedDriver_TurnAllOn();
+	LONGS_EQUAL(0xffff, virtualLeds);
+}
+
+TEST(led_driver, LedMemoryIsNotReadable)
+{
+	virtualLeds = 0xffff;
+	LedDriver_TurnOn(8);
+	LONGS_EQUAL(0x80, virtualLeds);
+}
+
+TEST(led_driver, UpperAndLowerBounds)
+{
+	LedDriver_TurnOn(1);
+	LedDriver_TurnOn(16);
+	LONGS_EQUAL(0x8001, virtualLeds);
+}
+
+TEST(led_driver, OutOfBoundsChangesNothing)
+{
+	LedDriver_TurnOn(-1);
+	LedDriver_TurnOn(0);
+	LedDriver_TurnOn(17);
+	LedDriver_TurnOn(3141);
+	LONGS_EQUAL(0, virtualLeds);
+}
