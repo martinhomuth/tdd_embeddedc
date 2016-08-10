@@ -27,9 +27,9 @@ TARGET_LINK_LIBRARIES(LedDriverTest LedDriver)
 ADD_LIBRARY(CircularBufferTest ./circular_buffer/circular_buffer_test.cpp)
 TARGET_LINK_LIBRARIES(CircularBufferTest CircularBuffer)
 
-
 ADD_EXECUTABLE(RunAllTests RunAllTests.cpp)
 TARGET_LINK_LIBRARIES(RunAllTests imp_cpputest
   LedDriverTest
   CircularBufferTest
+  RuntimeErrorStub
 )

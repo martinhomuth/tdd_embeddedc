@@ -2,6 +2,7 @@
 
 extern "C" {
 #include "led_driver/led_driver.h"
+#include "RuntimeErrorStub.h"
 }
 
 static uint16_t virtualLeds;
@@ -75,11 +76,52 @@ TEST(led_driver, UpperAndLowerBounds)
 	LONGS_EQUAL(0x8001, virtualLeds);
 }
 
-TEST(led_driver, OutOfBoundsChangesNothing)
+TEST(led_driver, OutOfBoundsTurnOnDoesNoHarm)
 {
 	LedDriver_TurnOn(-1);
 	LedDriver_TurnOn(0);
 	LedDriver_TurnOn(17);
 	LedDriver_TurnOn(3141);
 	LONGS_EQUAL(0, virtualLeds);
+}
+
+TEST(led_driver, OutOfBoundsTurnOffDoesNoHarm)
+{
+	LedDriver_TurnAllOn();
+
+	LedDriver_TurnOff(-1);
+	LedDriver_TurnOff(0);
+	LedDriver_TurnOff(17);
+	LedDriver_TurnOff(3141);
+	LONGS_EQUAL(0xffff, virtualLeds);
+}
+
+TEST(led_driver, OutOfBoundsProducesRuntimeError)
+{
+	LedDriver_TurnOn(-1);
+	STRCMP_EQUAL("LED Driver: out-of-bounds LED",
+		     RuntimeErrorStub_GetLastError());
+	CHECK_EQUAL(-1, RuntimeErrorStub_GetLastParameter());
+}
+
+TEST(led_driver, IsOn)
+{
+	CHECK_FALSE(LedDriver_IsOn(11));
+	LedDriver_TurnOn(11);
+	CHECK_TRUE(LedDriver_IsOn(11));
+}
+
+TEST(led_driver, OutOfBoundsLedsAreAlwaysOff)
+{
+	CHECK_FALSE(LedDriver_IsOn(0));
+	CHECK_FALSE(LedDriver_IsOn(17));
+	CHECK_TRUE(LedDriver_IsOff(0));
+	CHECK_TRUE(LedDriver_IsOff(17));
+}
+
+TEST(led_driver, IsOff)
+{
+	CHECK_TRUE(LedDriver_IsOff(12));
+	LedDriver_TurnOn(12);
+	CHECK_FALSE(LedDriver_IsOff(12));
 }
