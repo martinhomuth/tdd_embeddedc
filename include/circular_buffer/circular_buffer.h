@@ -3,7 +3,10 @@
 
 #include <stdint.h>
 
-void CircularBuffer_Create(uint8_t);
-
+void CircularBuffer_Create(uint16_t);
+void CircularBuffer_Destroy(void);
+int CircularBuffer_IsEmpty(void);
+int CircularBuffer_Pop(void);
+int CircularBuffer_Push(int);
 
 #endif
